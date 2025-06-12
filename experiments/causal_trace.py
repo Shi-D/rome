@@ -501,13 +501,13 @@ class ModelAndTokenizer:
 def layername(model, num, kind=None):
     if "LlamaModel" in str(type(model)) or "LlamaForCausalLM" in str(type(model)):
         if kind == "embed":
-            return "model.model.embed_tokens"
+            return "model.embed_tokens"
         elif kind == "mlp":
-            return f"model.model.layers.{num}.mlp"
+            return f"model.layers.{num}.mlp"
         elif kind == "attn":
-            return f"model.model.layers.{num}.self_attn"
+            return f"model.layers.{num}.self_attn"
         else:
-            return f"model.model.layers.{num}"
+            return f"model.layers.{num}"
     assert False, "unknown transformer structure"
 
 
