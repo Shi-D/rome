@@ -485,17 +485,29 @@ class ModelAndTokenizer:
         )
 
 
+# def layername(model, num, kind=None):
+#     if hasattr(model, "transformer"):
+#         if kind == "embed":
+#             return "transformer.wte"
+#         return f'transformer.h.{num}{"" if kind is None else "." + kind}'
+#     if hasattr(model, "gpt_neox"):
+#         if kind == "embed":
+#             return "gpt_neox.embed_in"
+#         if kind == "attn":
+#             kind = "attention"
+#         return f'gpt_neox.layers.{num}{"" if kind is None else "." + kind}'
+#     assert False, "unknown transformer structure"
+
 def layername(model, num, kind=None):
-    if hasattr(model, "transformer"):
+    if "LlamaModel" in str(type(model)) or "LlamaForCausalLM" in str(type(model)):
         if kind == "embed":
-            return "transformer.wte"
-        return f'transformer.h.{num}{"" if kind is None else "." + kind}'
-    if hasattr(model, "gpt_neox"):
-        if kind == "embed":
-            return "gpt_neox.embed_in"
-        if kind == "attn":
-            kind = "attention"
-        return f'gpt_neox.layers.{num}{"" if kind is None else "." + kind}'
+            return "model.model.embed_tokens"
+        elif kind == "mlp":
+            return f"model.model.layers.{num}.mlp"
+        elif kind == "attn":
+            return f"model.model.layers.{num}.self_attn"
+        else:
+            return f"model.model.layers.{num}"
     assert False, "unknown transformer structure"
 
 
