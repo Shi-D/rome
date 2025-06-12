@@ -22,6 +22,7 @@ from util import nethook
 from util.globals import DATA_DIR
 from util.runningstats import Covariance, tally
 
+CACHE_DIR = "/expanse/lustre/projects/iit120/yshi10/hf_cache"
 
 def main():
     parser = argparse.ArgumentParser(description="Causal Tracing")
@@ -459,11 +460,11 @@ class ModelAndTokenizer:
     ):
         if tokenizer is None:
             assert model_name is not None
-            tokenizer = AutoTokenizer.from_pretrained(model_name)
+            tokenizer = AutoTokenizer.from_pretrained(model_name, cache_dir=CACHE_DIR,)
         if model is None:
             assert model_name is not None
             model = AutoModelForCausalLM.from_pretrained(
-                model_name, low_cpu_mem_usage=low_cpu_mem_usage, torch_dtype=torch_dtype
+                model_name, low_cpu_mem_usage=low_cpu_mem_usage, torch_dtype=torch_dtype, cache_dir=CACHE_DIR,
             )
             nethook.set_requires_grad(False, model)
             model.eval().cuda()
@@ -548,7 +549,7 @@ def plot_trace_heatmap(result, savepdf=None, title=None, xlabel=None, modelname=
         fig, ax = plt.subplots(figsize=(3.5, 2), dpi=200)
         h = ax.pcolor(
             differences,
-            cmap={None: "Purples", "None": "Purples", "mlp": "Greens", "attn": "Reds"}[
+            cmap={None: "#608DAA", "None": "#82BAD2", "mlp": "#D76A5A", "attn": "#F8D27E"}[  # {None: "Purples", "None": "Purples", "mlp": "Greens", "attn": "Reds"}
                 kind
             ],
             vmin=low_score,
