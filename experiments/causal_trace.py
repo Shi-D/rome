@@ -24,6 +24,8 @@ from util.runningstats import Covariance, tally
 
 CACHE_DIR = "/expanse/lustre/projects/iit120/yshi10/hf_cache"
 
+WHOLE_TABLE = []
+
 def main():
     parser = argparse.ArgumentParser(description="Causal Tracing")
 
@@ -68,6 +70,7 @@ def main():
     torch_dtype = torch.float16 if "20b" in args.model_name else None
 
     mt = ModelAndTokenizer(args.model_name, torch_dtype=torch_dtype)
+    mt.num_layers = 32
 
     if args.fact_file is None:
         knowns = KnownsDataset(DATA_DIR)
