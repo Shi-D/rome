@@ -101,8 +101,11 @@ def main():
             uniform_noise = True
             noise_level = float(noise_level[1:])
 
-    knowns = knowns[:300]
+    knowns = knowns[:200]
+    know_id = 0
     for knowledge in tqdm(knowns):
+        print('know_id', know_id)
+        know_id += 1
         known_id = knowledge["known_id"]
         # for kind in None, "mlp", "attn":
         for kind in [None]:
@@ -638,7 +641,6 @@ def find_token_range(tokenizer, token_array, substring):
     toks = decode_tokens(tokenizer, token_array)
     substring = substring.replace(" ", "")
     whole_string = "".join(toks)
-    print('substring', substring, 'whole_string', whole_string)
     char_loc = whole_string.index(substring)
     loc = 0
     tok_start, tok_end = None, None
@@ -649,7 +651,6 @@ def find_token_range(tokenizer, token_array, substring):
         if tok_end is None and loc >= char_loc + len(substring):
             tok_end = i + 1
             break
-    print('(tok_start, tok_end)', (tok_start, tok_end))
     return (tok_start, tok_end)
 
 
