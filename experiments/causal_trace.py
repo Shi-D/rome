@@ -138,7 +138,7 @@ def main():
             if known_id > 10:
                 continue
             plot_trace_heatmap(plot_result, savepdf=pdfname)
-
+    np.save('WHOLE_TABLE.npy', WHOLE_TABLE)
 
 def trace_with_patch(
     model,  # The model
@@ -409,6 +409,7 @@ def trace_important_states(
         table.append(torch.stack(row))
     summed = torch.stack(table[1:]).sum(dim=0, keepdim=True)
     WHOLE_TABLE.append(summed)
+    print('WHOLE_TABLE', WHOLE_TABLE)
     return torch.stack(table)
 
 
