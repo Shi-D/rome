@@ -627,7 +627,7 @@ def decode_tokens(tokenizer, token_array):
 
 def find_token_range(tokenizer, token_array, substring):
     toks = decode_tokens(tokenizer, token_array)
-    substring = "".join(substring)
+    substring = substring.replace(" ", "")
     whole_string = "".join(toks)
     print('substring', substring, 'whole_string', whole_string)
     char_loc = whole_string.index(substring)
