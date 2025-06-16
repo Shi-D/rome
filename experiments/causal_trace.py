@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 from tqdm import tqdm
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-from dsets import KnownsDataset
+from dsets.knowns import KnownsDataset
 from rome.tok_dataset import (
     TokenizedDataset,
     dict_to_,
