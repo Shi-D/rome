@@ -318,6 +318,7 @@ def calculate_hidden_flow(
     [answer] = decode_tokens(mt.tokenizer, [answer_t])
     if expect is not None and answer.strip() != expect:
         return dict(correct_prediction=False)
+    print('subject', subject)
     e_range = find_token_range(mt.tokenizer, inp["input_ids"][0], subject)
     if token_range == "subject_last":
         token_range = [e_range[1] - 1]
@@ -627,7 +628,9 @@ def decode_tokens(tokenizer, token_array):
 
 def find_token_range(tokenizer, token_array, substring):
     toks = decode_tokens(tokenizer, token_array)
+    print('toks', toks)
     whole_string = "".join(toks)
+    print('whole_string', whole_string)
     char_loc = whole_string.index(substring)
     loc = 0
     tok_start, tok_end = None, None
