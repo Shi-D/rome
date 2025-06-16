@@ -101,7 +101,7 @@ def main():
             uniform_noise = True
             noise_level = float(noise_level[1:])
 
-    knowns = knowns[:200]
+    knowns = knowns[:10]
     know_id = 0
     for knowledge in tqdm(knowns):
         print('know_id', know_id)
@@ -135,7 +135,7 @@ def main():
             plot_result = dict(numpy_result)
             plot_result["kind"] = kind
             pdfname = f'{pdf_dir}/{str(numpy_result["answer"]).strip()}_{known_id}{kind_suffix}.pdf'
-            if known_id > 200:
+            if known_id > 10:
                 continue
             plot_trace_heatmap(plot_result, savepdf=pdfname)
 
@@ -407,8 +407,7 @@ def trace_important_states(
             )
             row.append(r)
         table.append(torch.stack(row))
-    table_wo_first = table[1:]
-    summed = table_wo_first.sum(dim=0, keepdim=True)
+    summed = torch.stack(table[1:]).sum(dim=0, keepdim=True)
     WHOLE_TABLE.append(summed)
     return torch.stack(table)
 
