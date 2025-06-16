@@ -111,7 +111,9 @@ def main():
         for kind in [None]:
             kind_suffix = f"_{kind}" if kind else ""
             filename = f"{result_dir}/knowledge_{known_id}{kind_suffix}.npz"
+            print('os.path.isfile(filename)', filename, os.path.isfile(filename))
             if not os.path.isfile(filename):
+                print('111111')
                 result = calculate_hidden_flow(
                     mt,
                     knowledge["prompt"],
@@ -128,6 +130,7 @@ def main():
                 }
                 numpy.savez(filename, **numpy_result)
             else:
+                print('222222')
                 numpy_result = numpy.load(filename, allow_pickle=True)
             if not numpy_result["correct_prediction"]:
                 tqdm.write(f"Skipping {knowledge['prompt']}")
@@ -452,6 +455,9 @@ def trace_important_window(
             )
             row.append(r)
         table.append(torch.stack(row))
+    summed = torch.stack(table[1:]).sum(dim=0, keepdim=True)
+    WHOLE_TABLE.append(summed)
+    print('WHOLE_TABLE', WHOLE_TABLE)
     return torch.stack(table)
 
 
