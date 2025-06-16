@@ -102,10 +102,7 @@ def main():
             noise_level = float(noise_level[1:])
 
     knowns = knowns[:10]
-    know_id = 0
     for knowledge in tqdm(knowns):
-        print('know_id', know_id)
-        know_id += 1
         known_id = knowledge["known_id"]
         # for kind in None, "mlp", "attn":
         for kind in [None]:
@@ -411,7 +408,7 @@ def trace_important_states(
             row.append(r)
         table.append(torch.stack(row))
     summed = torch.stack(table[1:]).sum(dim=0, keepdim=True)
-    WHOLE_TABLE.append(summed)
+    WHOLE_TABLE.append(summed.cpu().numpy())
     print('WHOLE_TABLE', WHOLE_TABLE)
     return torch.stack(table)
 
