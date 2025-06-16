@@ -640,6 +640,7 @@ def find_token_range(tokenizer, token_array, substring):
         if tok_end is None and loc >= char_loc + len(substring):
             tok_end = i + 1
             break
+    print('(tok_start, tok_end)', (tok_start, tok_end))
     return (tok_start, tok_end)
 
 
