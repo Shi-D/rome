@@ -5,6 +5,7 @@ import re
 from collections import defaultdict
 
 import numpy
+import numpy as np
 import torch
 from datasets import load_dataset
 from matplotlib import pyplot as plt
@@ -403,6 +404,8 @@ def trace_important_states(
             )
             row.append(r)
         table.append(torch.stack(row))
+    summed = table.sum(dim=0, keepdim=True)
+    WHOLE_TABLE.append(summed)
     return torch.stack(table)
 
 
@@ -765,6 +768,7 @@ def collect_embedding_tdist(mt, degree=3):
         student = factor * gauss
         return student
 
+    np.save('WHOLE_TABLE.npy', WHOLE_TABLE)
     return normal_to_student
 
 
