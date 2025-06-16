@@ -101,7 +101,6 @@ def main():
             uniform_noise = True
             noise_level = float(noise_level[1:])
 
-    knowns = knowns[:10]
     for knowledge in tqdm(knowns):
         known_id = knowledge["known_id"]
         # for kind in None, "mlp", "attn":
@@ -576,7 +575,7 @@ def plot_trace_heatmap(result, savepdf=None, title=None, xlabel=None, modelname=
         fig, ax = plt.subplots(figsize=(3.5, 2), dpi=200)
         h = ax.pcolor(
             differences,
-            cmap={None: "Greys", "None": "Greys", "mlp": "Oranges", "attn": "binary"}[  # {None: "Purples", "None": "Purples", "mlp": "Greens", "attn": "Reds"}
+            cmap={None: "Purples", "None": "Purples", "mlp": "Oranges", "attn": "binary"}[  # {None: "Purples", "None": "Purples", "mlp": "Greens", "attn": "Reds"}
                 kind
             ],
             vmin=low_score,
