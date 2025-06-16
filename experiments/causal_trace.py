@@ -383,8 +383,10 @@ def trace_important_states(
 
     if token_range is None:
         token_range = range(ntoks)
+    print('token_range', token_range)
     for tnum in token_range:
         row = []
+        print('num_layers', num_layers)
         for layer in range(num_layers):
             r = trace_with_patch(
                 model,
